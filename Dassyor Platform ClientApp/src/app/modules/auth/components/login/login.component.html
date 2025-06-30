@@ -1,0 +1,106 @@
+<div class="auth-container">
+  <p-card class="auth-card" styleClass="auth-card">
+    <div class="text-left pb-2">
+      <h2 class="welcome-back-text text-4xl font-bold mt-2 mb-2">
+        Welcome back 👋
+      </h2>
+      <p class="welcome-back-subtext text-sm ml-1">
+        Please enter your credentials to continue
+      </p>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mt-7 mb-5">
+        <p-float-label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty': loginForm.get('email')?.invalid,
+            }" />
+          <label class="text-sm" for="email">Email</label>
+        </p-float-label>
+      </div>
+
+      <div class="mt-7 mb-2">
+        <p-float-label>
+          <p-password
+            id="password"
+            formControlName="password"
+            fluid="true"
+            [feedback]="false"
+            [toggleMask]="true"
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty': loginForm.get('password')?.invalid,
+            }"></p-password>
+          <label class="text-sm" for="password">Password</label>
+        </p-float-label>
+      </div>
+
+      <div class="flex justify-end mb-4">
+        <p-button
+          class="forgot-password-button"
+          label="Forgot password?"
+          [link]="true"
+          size="small"
+          (click)="navigateToForgotPassword()" />
+      </div>
+
+      <p-button
+        type="submit"
+        label="Sign in"
+        class="w-full"
+        size="large"
+        styleClass="sign-in-button"
+        [loading]="isLoading()"></p-button>
+    </form>
+
+    <p-divider>
+      <span class="text-sm or-text">or</span>
+    </p-divider>
+
+    <script src="https://accounts.google.com/gsi/client" async></script>
+
+    <div class="button-wrapper">
+      <div class="invisible-button flex justify-center mb-3">
+        @if (googleButtonVisible) {
+          <asl-google-signin-button
+            class="google-login-button"
+            type="standard"
+            size="large"
+            locale="en"
+            [width]="isMobileView() ? 256 : 336"
+            text="continue_with">
+          </asl-google-signin-button>
+        }
+      </div>
+
+      <p-button
+        type="button"
+        label="Continue with Google"
+        icon="pi pi-google"
+        class="grid"
+        size="large"
+        [outlined]="true"
+        [loading]="isGoogleSignInLoading()">
+      </p-button>
+    </div>
+
+    <div class="mt-4 text-sm text-center">
+      <span class="dont-have-account-text">Don't have an account?</span>
+      <p-button
+        class="sign-up-button ml-2"
+        label="Sign up"
+        [link]="true"
+        (click)="navigateToRegister()" />
+    </div>
+
+    <p-toast
+      [breakpoints]="{
+        '920px': { width: '95%', right: '0.5rem', left: '1rem' },
+      }"></p-toast>
+  </p-card>
+</div>

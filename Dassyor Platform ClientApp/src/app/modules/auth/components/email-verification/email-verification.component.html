@@ -1,0 +1,26 @@
+<div class="auth-container">
+  <p-card class="auth-card" styleClass="auth-card">
+    <div class="text-center pb-2">
+      <div class="flex items-center justify-center gap-3 mt-2 mb-4">
+        <i class="verification-icon pi pi-envelope"></i>
+        <h2 class="verification-title text-4xl font-bold">Check your email</h2>
+      </div>
+      <p class="verification-text text-sm mb-4">
+        We've sent a verification link to your email address. Please check your
+        inbox and click the link to activate your account.
+      </p>
+      <p class="verification-note text-sm mb-6">
+        If you don't see the email, check your spam folder.
+      </p>
+    </div>
+
+    <div class="flex justify-center">
+      <p-button
+        label="Back to sign in"
+        size="large"
+        variant="outlined"
+        (click)="navigateToLogin()">
+      </p-button>
+    </div>
+  </p-card>
+</div>

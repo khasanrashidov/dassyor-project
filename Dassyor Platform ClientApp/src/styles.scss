@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'tailwindcss';
+@use 'primeicons/primeicons.css';
+@use 'colors';
+
+body {
+  font-family: 'Open Sans', Verdana, sans-serif;
+  //background-color: white !important;
+}
+
+.p-megamenu {
+  border-radius: 2rem !important;
+}
+
+.primary-color {
+  color: colors.$primary-color !important;
+}
+
+.danger-color {
+  color: var(--p-red-600);
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 0.5rem; /* Vertical scrollbar width */
+  height: 0.5rem; /* Horizontal scrollbar height */
+}
+
+::-webkit-scrollbar-track {
+  background: colors.$secondary-color; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: colors.$primary-color; /* Scrollbar thumb color */
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: colors.$primary-color; /* Thumb color on hover */
+}

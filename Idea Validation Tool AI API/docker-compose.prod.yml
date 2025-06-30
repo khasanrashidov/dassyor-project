@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  # Web application
+  web:
+    build: .
+    restart: always
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+
+  # Celery worker for background tasks
+  worker:
+    build: .
+    restart: always
+    command: celery -A src.celery_config:celery_app worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+
+  # Redis as message broker
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # Flower for monitoring Celery tasks (optional)
+  flower:
+    build: .
+    restart: always
+    command: celery -A src.celery_config:celery_app flower
+    depends_on:
+      - redis
+      - worker
+    env_file:
+      - .env
+    # We'll expose Flower through Nginx
+
+  # Nginx service for reverse proxy
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - web
+      - flower
+
+volumes:
+  redis_data:

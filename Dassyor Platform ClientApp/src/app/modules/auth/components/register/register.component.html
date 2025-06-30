@@ -1,0 +1,196 @@
+<link rel="stylesheet" href="../reset-password/reset-password.component.scss" />
+<div class="auth-container">
+  <p-card class="auth-card" styleClass="auth-card">
+    <div class="text-left pb-2">
+      <h2 class="create-account-text text-4xl font-bold mt-2 mb-2">
+        Create account ✨
+      </h2>
+      <p class="create-account-subtext text-sm ml-1">
+        Please fill in your details to get started
+      </p>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="mt-7 mb-5">
+        <p-float-label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                registerForm.get('email')?.invalid &&
+                registerForm.get('email')?.dirty,
+            }" />
+          <label class="text-sm" for="email">Email</label>
+        </p-float-label>
+        <div class="flex flex-col">
+          @if (
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.dirty &&
+            registerForm.get('email')?.errors?.['required']
+          ) {
+            <small class="danger-color ml-2">Email is required</small>
+          }
+          @if (
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.dirty &&
+            registerForm.get('email')?.errors?.['email']
+          ) {
+            <small class="danger-color ml-2">Invalid email address</small>
+          }
+          @if (
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.dirty &&
+            registerForm.get('email')?.errors?.['maxlength']
+          ) {
+            <small class="danger-color ml-2">
+              Email is too long (max 254 characters)
+            </small>
+          }
+        </div>
+      </div>
+
+      <div class="mt-7 mb-5">
+        <p-float-label>
+          <p-password
+            id="password"
+            formControlName="password"
+            fluid="true"
+            [feedback]="true"
+            [toggleMask]="true"
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.dirty,
+            }"></p-password>
+          <label class="text-sm" for="password">Password</label>
+        </p-float-label>
+        <div class="flex flex-col">
+          @if (
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.dirty &&
+            registerForm.get('password')?.errors?.['required']
+          ) {
+            <small class="danger-color ml-2">Password is required</small>
+          }
+          @if (
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.dirty &&
+            registerForm.get('password')?.errors?.['minlength']
+          ) {
+            <small class="danger-color ml-2">
+              Password must be at least 8 characters
+            </small>
+          }
+          @if (
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.dirty &&
+            registerForm.get('password')?.errors?.['maxlength']
+          ) {
+            <small class="danger-color ml-2">
+              Password cannot exceed 128 characters
+            </small>
+          }
+        </div>
+      </div>
+
+      <div class="mt-7 mb-5">
+        <p-float-label>
+          <p-password
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            fluid="true"
+            [feedback]="false"
+            [toggleMask]="true"
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                (registerForm.get('confirmPassword')?.invalid ||
+                  registerForm.hasError('passwordMismatch')) &&
+                registerForm.get('confirmPassword')?.dirty,
+            }"></p-password>
+          <label class="text-sm" for="confirmPassword">Confirm password</label>
+        </p-float-label>
+        <div class="flex flex-col">
+          @if (
+            (registerForm.get('confirmPassword')?.invalid ||
+              registerForm.hasError('passwordMismatch')) &&
+            registerForm.get('confirmPassword')?.dirty
+          ) {
+            <small class="danger-color ml-2">Passwords do not match</small>
+          }
+        </div>
+      </div>
+
+      <div class="flex items-center mb-3">
+        <p-checkbox
+          class="flex"
+          formControlName="acceptTerms"
+          [binary]="true"
+          inputId="acceptTerms"></p-checkbox>
+        <label for="acceptTerms" class="ml-2 text-sm terms-text">
+          I agree to the
+          <a [href]="TERMS_OF_SERVICE_LINK" class="terms-link">
+            Terms of Service
+          </a>
+          and
+          <a [href]="PRIVACY_POLICY_LINK" class="terms-link">Privacy Policy</a>
+        </label>
+      </div>
+
+      <p-button
+        type="submit"
+        label="Sign up"
+        class="w-full"
+        size="large"
+        styleClass="sign-up-button"
+        [loading]="isLoading()"></p-button>
+    </form>
+
+    <p-divider>
+      <span class="text-sm or-text">or</span>
+    </p-divider>
+
+    <div class="button-wrapper">
+      <div class="invisible-button flex justify-center mb-3">
+        @if (googleButtonVisible) {
+          <asl-google-signin-button
+            class="google-login-button"
+            type="standard"
+            size="large"
+            locale="en"
+            [width]="isMobileView() ? 256 : 336"
+            text="signup_with">
+          </asl-google-signin-button>
+        }
+      </div>
+
+      <p-button
+        type="button"
+        label="Continue with Google"
+        icon="pi pi-google"
+        class="grid"
+        size="large"
+        [outlined]="true"
+        [loading]="isGoogleSignInLoading()">
+      </p-button>
+    </div>
+
+    <div class="mt-4 text-sm text-center">
+      <span class="already-have-account-text">Already have an account?</span>
+      <p-button
+        class="sign-in-button ml-2"
+        label="Sign in"
+        [link]="true"
+        (click)="navigateToLogin()" />
+    </div>
+
+    <p-toast
+      [breakpoints]="{
+        '920px': { width: '95%', right: '0.5rem', left: '1rem' },
+      }"></p-toast>
+  </p-card>
+</div>

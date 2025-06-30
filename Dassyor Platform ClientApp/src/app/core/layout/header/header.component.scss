@@ -1,0 +1,103 @@
+@use 'colors';
+
+.card {
+  padding: 1rem 1rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: colors.$primary-color;
+  margin-bottom: 0.125rem;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: inline-flex;
+  }
+  .projects-menu-button {
+    display: none;
+  }
+}
+
+::ng-deep .user-email .p-menu-item-content .p-menu-item-label {
+  font-weight: 600;
+  color: var(--p-gray-500);
+}
+
+::ng-deep .delete-project .p-menu-item-label {
+  color: var(--p-red-500) !important;
+}
+
+::ng-deep .delete-project .p-menu-item-content {
+  &:hover {
+    background: var(--p-red-50) !important;
+  }
+}
+
+::ng-deep .log-out .p-menu-item-label {
+  color: var(--p-red-500) !important;
+}
+
+::ng-deep .log-out .p-menu-item-icon {
+  color: var(--p-red-500) !important;
+}
+
+::ng-deep .log-out .p-menu-item-content {
+  &:hover {
+    background: var(--p-red-50) !important;
+  }
+}
+
+::ng-deep .create-project .p-menu-item-label {
+  color: colors.$primary-color !important;
+}
+
+::ng-deep .create-project .p-menu-item-content {
+  &:hover {
+    background: colors.$secondary-color !important;
+  }
+}
+
+::ng-deep .p-menu-submenu-label:has(span:empty) {
+  display: none !important;
+}
+
+::ng-deep .p-menu-submenu-label {
+  padding-bottom: 0 !important;
+}
+
+// ::ng-deep .p-megamenu {
+//   background: rgba(255, 255, 255, 0.8) !important;
+//   backdrop-filter: blur(4px);
+// }
+
+::ng-deep .p-menu-overlay {
+  top: 100% !important; /* Ensures it appears directly below the header */
+  transform: translateY(-0.5rem); /* Adds slight spacing below the header */
+}
+
+::ng-deep .projects-menu {
+  left: auto !important; /* Resets unwanted left positioning */
+  right: 4rem !important; /* Aligns the menu properly */
+}
+
+::ng-deep .user-menu {
+  left: auto !important; /* Resets unwanted left positioning */
+  right: 0 !important; /* Aligns the menu properly */
+}

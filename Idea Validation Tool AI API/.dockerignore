@@ -1,0 +1,46 @@
+# Version control
+.git
+.gitignore
+
+# Environment files (contain secrets)
+.env
+.env.*
+*.env
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Docker files (to avoid recursion)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Development and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+redis_data/
+postgres_data/
+logs/
+.pytest_cache/
+data/
+
+# Other potentially large directories
+node_modules/
+dist/
+build/

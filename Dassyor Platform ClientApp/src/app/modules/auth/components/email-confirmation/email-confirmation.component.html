@@ -1,0 +1,71 @@
+<div class="auth-container">
+  <p-card class="auth-card" styleClass="auth-card">
+    <div class="text-left pb-2">
+      @if (confirmationStatus() === 'pending') {
+        <div class="flex items-center justify-center gap-3 mt-2 mb-4">
+          <i class="email-confirmation-icon pi pi-envelope"></i>
+          <h2 class="email-confirmation-title text-4xl font-bold">
+            Email confirmation
+          </h2>
+        </div>
+        <p class="email-confirmation-subtext text-sm ml-1">
+          We’re verifying your email address. Please wait a moment.
+        </p>
+      } @else if (confirmationStatus() === 'success') {
+        <div class="flex items-center justify-center gap-3 mt-2 mb-4">
+          <h2 class="text-4xl font-bold email-confirmation-title">
+            Email confirmed ✅
+          </h2>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-center mt-2 mb-4 email-confirmation-subtext">
+            Your email has been successfully confirmed. You can now sign in.
+          </p>
+        </div>
+      } @else if (confirmationStatus() === 'error') {
+        <div class="flex items-center justify-center gap-3 mt-2 mb-4">
+          <h2
+            class="text-4xl font-bold email-confirmation-title flex items-center gap-2">
+            Confirmation failed
+            <span class="text-4xl">❌</span>
+          </h2>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-center mt-2 mb-2 email-confirmation-subtext">
+            We couldn’t confirm your email address.
+          </p>
+          <p class="text-sm text-center mt-2 mb-2 email-confirmation-subtext">
+            Please try again or contact support if the problem persists.
+          </p>
+        </div>
+      }
+    </div>
+
+    @if (confirmationStatus() === 'pending') {
+      <div class="text-center">
+        <p-progressSpinner
+          styleClass="w-8rem h-8rem"
+          strokeWidth="4"></p-progressSpinner>
+        <p class="mt-4 email-confirmation-subtext">
+          Confirming your email address...
+        </p>
+      </div>
+    }
+
+    @if (confirmationStatus() !== 'pending') {
+      <div class="flex justify-center mt-4">
+        <p-button
+          label="Back to sign in"
+          size="large"
+          variant="outlined"
+          (click)="navigateToLogin()">
+        </p-button>
+      </div>
+    }
+
+    <p-toast
+      [breakpoints]="{
+        '920px': { width: '95%', right: '0.5rem', left: '1rem' },
+      }"></p-toast>
+  </p-card>
+</div>

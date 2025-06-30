@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\core",
+    "\\src\\app\\core\\models",
+    "\\src\\app\\core\\models\\auth",
+    "\\src\\app\\modules",
+    "\\src\\app\\modules\\auth",
+    "\\src\\app\\modules\\auth\\components",
+    "\\src\\app\\modules\\auth\\components\\login",
+    "\\src\\app\\modules\\auth\\services"
+  ],
+  "SelectedNode": "\\src\\app\\modules\\auth\\components\\login\\login.component.html",
+  "PreviewInSolutionExplorer": false
+}

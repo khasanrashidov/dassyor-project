@@ -1,0 +1,26 @@
+Below is a general set of instructions you can provide to your Replit agent (using OpenAI’s API) for building the idea validation flow on your landing page:
+
+1. **User Input Validation:**  
+   - When the user submits their idea (e.g., “I want to create an app that helps people focus on their job by cutting out social media noise”), first check that the input is valid.  
+   - If the input is too short (for example, if it’s only one word or below a minimum word count), then skip generating any output (i.e., leave the “Problem Statement” and “Target Audience” sections blank).
+
+2. **Generate Content with OpenAI:**  
+   - If the input passes validation, construct a prompt for the OpenAI API that instructs the model to generate:
+     - A problem statement that describes the core issue the idea addresses (for example, how distractions decrease productivity).
+     - A target audience description (such as “Professionals and students”).  
+   - Example prompt structure:  
+     > "Based on the following startup idea: '[User Input]', generate a concise problem statement that outlines the key challenge this idea aims to solve. Also, define the target audience who would benefit most from this solution. The problem statement should be one or two sentences, and the target audience should be specified clearly."
+
+3. **Handling the API Response:**  
+   - Once the API returns the generated text, split or parse the output to extract the two parts: the problem statement and the target audience.  
+   - Display these results in the designated areas of your landing page.
+
+4. **User Experience Considerations:**  
+   - Include a loading state (e.g., a spinner or “Analyzing your idea…” message) while waiting for the API response.  
+   - Ensure that any errors from the API (or an invalid input) result in a graceful fallback, such as a blank output or an error message prompting the user to provide a more detailed idea.
+
+5. **Testing & Iteration:**  
+   - Test with a variety of inputs to ensure that the validation works as expected and that the API-generated outputs are relevant and useful.  
+   - Adjust the prompt wording if needed for better clarity or more tailored responses.
+
+By following these steps, your Replit agent will be able to handle the two-step process—from validating the user’s idea input to generating meaningful insights for problem statement and target audience.

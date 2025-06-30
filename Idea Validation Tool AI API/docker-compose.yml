@@ -1,0 +1,63 @@
+services:
+  # Web application
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+
+  # Celery worker for background tasks
+  worker:
+    build: .
+    command: celery -A src.celery_config:celery_app worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+
+  # Celery beat for scheduled tasks (optional)
+  # beat:
+  #   build: .
+  #   command: celery -A src.celery_config:celery_app beat --loglevel=info
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - redis
+  #   env_file:
+  #     - .env
+
+  # Redis as message broker
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # Flower for monitoring Celery tasks (optional)
+  flower:
+    build: .
+    command: celery -A src.celery_config:celery_app flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - worker
+    env_file:
+      - .env
+
+volumes:
+  redis_data:

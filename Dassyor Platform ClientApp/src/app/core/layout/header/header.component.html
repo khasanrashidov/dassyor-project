@@ -1,0 +1,60 @@
+@if (isAuthenticated) {
+  <div class="card" #header>
+    <p-megamenu appendTo="body">
+      <ng-template #start>
+        <a href="/dashboard" class="flex gap-2">
+          <img
+            ngSrc="dassyor_filled_logo.svg"
+            height="32"
+            width="32"
+            alt="dassyor_filled_logo"
+            [priority]="true" />
+          <span class="title"> Dassyor </span>
+        </a>
+      </ng-template>
+
+      <ng-template #end>
+        <p-button
+          icon="pi pi-bars"
+          severity="secondary"
+          variant="outlined"
+          size="small"
+          class="mobile-menu-button me-6"
+          pTooltip="Options"
+          tooltipPosition="bottom"
+          (click)="menu.toggle($event)"></p-button>
+
+        <p-menu
+          #menu
+          [model]="items"
+          [popup]="true"
+          styleClass="projects-menu" />
+        <p-toast
+          position="bottom-right"
+          [breakpoints]="{
+            '920px': { width: '95%', right: '0.5rem', left: '1rem' },
+          }" />
+        <p-button
+          (click)="menu.toggle($event)"
+          [label]="activeProject ? activeProject : 'Select project'"
+          severity="secondary"
+          variant="outlined"
+          icon="pi pi-angle-down"
+          iconPos="right"
+          size="small"
+          class="projects-menu-button me-6" />
+
+        <p-menu
+          #avatarMenu
+          [model]="avatarMenuItems"
+          [popup]="true"
+          styleClass="user-menu"></p-menu>
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+          shape="circle"
+          styleClass="user-avatar"
+          (click)="avatarMenu.toggle($event)"></p-avatar>
+      </ng-template>
+    </p-megamenu>
+  </div>
+}

@@ -1,0 +1,128 @@
+Below is a complete HTML/CSS/JS example that implements your requirements. In this example:
+
+- The form initially asks for an idea.
+- When the “Next” button is clicked, it checks if the idea is one word (or “not understandable” by that simple rule).  
+  - If so, it leaves the “Problem Statement” and “Target Audience” fields with their default placeholders.
+  - Otherwise, it “refines” the idea by pre-filling these fields (here, simply prefixing with “Refined Problem:” and “Refined Audience:”).
+- The buttons are styled to be shorter, attractive, and are aligned to the right.
+- The whole form is wrapped in a container with a fixed max-width to prevent it from enlarging too much.
+
+You can copy this prompt to Replit:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Idea Refinement Form</title>
+  <style>
+    /* Fixed width container to prevent form from becoming too wide */
+    .form-container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+    }
+    /* Form fields styling */
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    /* Button styling: shorter, good looking and aligned to the right */
+    .button-container {
+      text-align: right;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form id="ideaForm">
+      <label for="idea">Enter your idea:</label>
+      <input type="text" id="idea" name="idea" placeholder="Your idea...">
+      <div class="button-container">
+        <button type="button" class="btn" id="nextBtn">Next</button>
+      </div>
+
+      <!-- Hidden second step; shown after clicking Next -->
+      <div id="secondStep" style="display:none;">
+        <label for="problem">Problem Statement:</label>
+        <textarea id="problem" name="problem" placeholder="The problem statement"></textarea>
+        <label for="audience">Target Audience:</label>
+        <textarea id="audience" name="audience" placeholder="The target audience"></textarea>
+        <div class="button-container">
+          <button type="button" class="btn" id="refineBtn">Refine</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Grab elements
+    const ideaInput = document.getElementById('idea');
+    const secondStep = document.getElementById('secondStep');
+    const problemField = document.getElementById('problem');
+    const audienceField = document.getElementById('audience');
+    const nextBtn = document.getElementById('nextBtn');
+    const refineBtn = document.getElementById('refineBtn');
+
+    // On Next button click, show the second step and process the idea input
+    nextBtn.addEventListener('click', function(){
+      const idea = ideaInput.value.trim();
+      secondStep.style.display = 'block';
+
+      // Simple check: if idea is one word (or empty), consider it not understandable
+      if (idea.split(' ').length < 2) {
+        // Leave the fields with their default placeholders (empty value)
+        problemField.value = '';
+        audienceField.value = '';
+        problemField.placeholder = "The problem statement";
+        audienceField.placeholder = "The target audience";
+      } else {
+        // Otherwise, prefill the fields with a refined version of the idea
+        problemField.value = "Refined Problem: " + idea;
+        audienceField.value = "Refined Audience: " + idea;
+      }
+    });
+
+    // Optional: additional logic on refine button click
+    refineBtn.addEventListener('click', function(){
+      // For now, simply alert. You could add further submission or refinement logic here.
+      alert("Idea refined!");
+    });
+  </script>
+</body>
+</html>
+```
+
+### How it works:
+- **Idea Input:** The user types an idea.  
+- **Validation:** When “Next” is clicked, the script checks if the input contains more than one word.
+  - **If not:** It leaves the “Problem Statement” and “Target Audience” fields with the default placeholders.
+  - **If yes:** It pre-fills these fields with a simple “refined” version of the idea.
+- **Buttons:** The “Next” and “Refine” buttons are styled with a modern look and are aligned to the right.
+- **Fixed Form Width:** The `.form-container` ensures that the form stays within a fixed width even when the window is enlarged.
+
+You can paste this code into a new Replit project to test and modify it as needed.
